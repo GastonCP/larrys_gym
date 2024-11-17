@@ -86,17 +86,21 @@ $url = ControladorPlantilla::url();
                     //print_r($rutas);
                     //echo "</pre>";
                     if (
-                        $rutas[0] == "categorias" ||
-                        $rutas[0] == "productos" ||
-                        $rutas[0] == "agregar_producto" ||
-                        $rutas[0] == "editar_producto" ||
-                        $rutas[0] == "salir" ||
-                        $rutas[0] == "usuarios"
+                        #$rutas[0] == "categorias" ||
+                        #$rutas[0] == "productos" ||
+                        #$rutas[0] == "agregar_producto" ||
+                        #$rutas[0] == "editar_producto" ||
+                        #$rutas[0] == "salir" ||
+                        #$rutas[0] == "usuarios"
+                        $rutas[0] == "planes"
                     ) {
-
-                        include "vistas/modulos/" . $rutas[0] . ".php";
+                        
+                        #include "vistas/modulos/" . $rutas[0] . ".php";
+                        #Reemplace la linea anterioro con esta, y cree la carpeta ../vistas/core
+                        #En la carpeta core podemos dejar las ventanas que creemos para no confundirnos con las de los modulos
+                        include "vistas/core/" . $rutas[0] . ".php";
+                        
                     } else {
-
                         include "vistas/modulos/404.php";
                     }
                 }

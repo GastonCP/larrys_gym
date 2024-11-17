@@ -27,7 +27,18 @@
 
                             <li class="menu-title">Menu</li>
 
-                            <!--- <li>
+
+                            <!-- Opcion de menu / Planes de entrenamientos -->
+                            <li>
+                                <a href="<?php echo $url; ?>planes">
+                                    <i data-feather="aperture"></i>
+                                    <span> Planes de entrenamiento </span>
+                                </a>
+                            </li>
+                            <!-- Cierre de Opcion de menu / Planes de entrenamientos -->
+
+                            <!--- 
+                            <li>
                                 <a href="<?php echo $url; ?>usuarios">
                                     <i data-feather="aperture"></i>
                                     <span> Usuarios </span>
