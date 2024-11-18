@@ -35,8 +35,8 @@
                             <td>' . $plan["id_entrenador"] . '</td>
                             <td>$' . $plan["precio"] . '</td>
                             <td>
-                                <a href="planes_editar.php?id_plan=' . $plan["id_plan"] . '" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="planes.php?id_plan_eliminar=' . $plan["id_plan"] . '" class="btn btn-danger btn-sm">Eliminar</a>
+                                <a href='.$url.'core/planes_editar.php?id_plan=' . $plan["id_plan"] . ' class="btn btn-warning btn-sm">Editar</a>
+                                <a href='.$url.'core/planes_eliminar.php?id_plan_eliminar=' . $plan["id_plan"] . ' class="btn btn-danger btn-sm">Eliminar</a>
                             </td>
                           </tr>';
                 }

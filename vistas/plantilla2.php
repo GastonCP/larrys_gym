@@ -20,6 +20,7 @@ $url = ControladorPlantilla::url();
 
     <!-- App css -->
     <link href="<?php echo $url; ?>vistas/assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
     <!-- Datatables css -->
@@ -48,8 +49,11 @@ $url = ControladorPlantilla::url();
 
     <!-- Datatable Demo App Js -->
     <script src="<?php echo $url; ?>vistas/assets/js/pages/datatable.init.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="<?php echo $url; ?>vistas/assets/js/alerts.js"></script>
+
     <script src="<?php echo $url; ?>vistas/assets/js/eliminar.js"></script>
 
 </head>
@@ -86,25 +90,19 @@ $url = ControladorPlantilla::url();
                     //print_r($rutas);
                     //echo "</pre>";
                     if (
-                        #$rutas[0] == "categorias" ||
-                        #$rutas[0] == "productos" ||
-                        #$rutas[0] == "agregar_producto" ||
-                        #$rutas[0] == "editar_producto" ||
-                        #$rutas[0] == "salir" ||
-                        #$rutas[0] == "usuarios"
-                        $rutas[0] == "planes" ||
-                        $rutas[0] == "planes_agregar" ||
-                        $rutas[0] == "planes_eliminar" ||
-                        $rutas[0] == "eplanes_editar"
-                        
+                        $rutas[0] == "clientes" ||
+                        $rutas[0] == "agregar_cliente" ||
+                        $rutas[0] == "editar_cliente" ||
+                        $rutas[0] == "entrenadores" ||
+                        $rutas[0] == "agregar_entrenador" ||
+                        $rutas[0] == "editar_entrenador" ||
+                       
+                        $rutas[0] == "usuarios"
                     ) {
-                        
-                        #include "vistas/modulos/" . $rutas[0] . ".php";
-                        #Reemplace la linea anterioro con esta, y cree la carpeta ../vistas/core
-                        #En la carpeta core podemos dejar las ventanas que creemos para no confundirnos con las de los modulos
-                        include "vistas/core/" . $rutas[0] . ".php";
-                        
+
+                        include "vistas/modulos/" . $rutas[0] . ".php";
                     } else {
+
                         include "vistas/modulos/404.php";
                     }
                 }
@@ -130,10 +128,10 @@ $url = ControladorPlantilla::url();
 
     </body>
 
-<?php
-# } else {
-#    include "vistas/modulos/login.php";
+<?php #} else {
+    #include "vistas/modulos/login.php";
 #}
+
 ?>
 
 </html>
