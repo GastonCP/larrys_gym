@@ -92,7 +92,9 @@ $url = ControladorPlantilla::url();
                         #$rutas[0] == "editar_producto" ||
                         #$rutas[0] == "salir" ||
                         #$rutas[0] == "usuarios"
-                        $rutas[0] == "planes"
+                        $rutas[0] == "planes" ||
+                        $rutas[0] == "planes_agregar"
+                        
                     ) {
                         
                         #include "vistas/modulos/" . $rutas[0] . ".php";
