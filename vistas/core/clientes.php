@@ -1,6 +1,5 @@
 <?php
 $clientes = ControladorClientes::ctrMostrarClientes(null, null);
-
 $cantidad = count($clientes);
 ?>
 
@@ -43,15 +42,14 @@ $cantidad = count($clientes);
                                 <td><?php echo $cliente["fecha_inscripcion"]; ?></td>
                                 <td><?php echo $cliente["estado"] == 1 ? "Activo" : "Inactivo"; ?></td>
                                 <td><?php echo $cliente["nombre_plan"] ?? "Sin Plan"; ?></td>
+                                
+                                
                                 <td>
-                                    <a href="editar_cliente/<?php echo $cliente["id_cliente"]; ?>" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-                                    <button
-                                    class="btn btn-danger btnEliminarCliente"
-                                    id_cliente=<?php echo $cliente["id_cliente"]; ?>
-                                    ><i class="fas fa-trash"></i></button></td>
-
+                                    <a href="editar_cliente/<?php echo $cliente["id_cliente"]; ?>" class="btn btn-warning"> 
+                                    <i class="fas fa-edit"></i> Editar</a>
+                                    
+                                    <button class="btn btn-danger btnEliminarCliente" id_cliente=<?php echo $cliente["id_cliente"]; ?>>
+                                    <i class="fas fa-trash"></i></button></td>
                                 </tr>
 
                                 <input type="hidden" id="url" value="<?php echo $url; ?>">

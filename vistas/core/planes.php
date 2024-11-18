@@ -1,3 +1,8 @@
+<?php
+$planes = ControladorPlanes::ctrMostrarPlanes(null, null); // Llamar al controlador para obtener todos los planes
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,7 +30,6 @@
             </thead>
             <tbody>
                 <?php
-                $planes = ControladorPlanes::ctrMostrarPlanes(null, null); // Llamar al controlador para obtener todos los planes
                 foreach ($planes as $plan) {
                     echo '<tr>
                             <td>' . $plan["id_plan"] . '</td>
@@ -34,18 +38,22 @@
                             <td>' . $plan["sesiones"] . '</td>
                             <td>' . $plan["id_entrenador"] . '</td>
                             <td>$' . $plan["precio"] . '</td>
+                            <td>';?>
                             <td>
-                                <a href='.$url.'core/planes_editar.php?id_plan=' . $plan["id_plan"] . ' class="btn btn-warning btn-sm">Editar</a>
-                                <a href='.$url.'core/planes_eliminar.php?id_plan_eliminar=' . $plan["id_plan"] . ' class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="planes_editar/<?php echo $plan["id_plan"]; ?>" class="btn btn-warning"> 
+                            <i class="fas fa-edit"></i> Editar</a>
+
+                            <!-- <a href="planes_eliminar/<?php# echo $plan["id_plan"]; ?>" class="btn btn-danger">  -->
+                            <!-- <i class="fas fa-trash"></i> Eliminar</button> -->
                             </td>
-                          </tr>';
+                    <?php echo '</td></tr>';
                 }
                 ?>
             </tbody>
         </table>
         
         <!-- Se llama de esta forma para que se guie implementando el url -->
-        <a href="<?php echo $url; ?>planes_agregar" 
+        <a href="<?php echo $url; ?>core/planes_agregar" 
         class="btn btn-primary">Agregar Nuevo Plan</a>
         
     </div>

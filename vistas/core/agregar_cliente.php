@@ -1,8 +1,5 @@
 <?php
-
-
-$planes = ModeloPlanes::mdlMostrarPlanes();
-
+#$planes = ModeloPlanes::mdlMostrarPlanes();
 ?>
 
 
@@ -51,16 +48,17 @@ $planes = ModeloPlanes::mdlMostrarPlanes();
                             <option value="0">Inactivo</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    
+                    <!--<div class="form-group">
                         <label for="plan">Plan</label>
                         <select class="form-control" id="plan" name="plan" required>
-                            <?php foreach ($planes as $plan) { ?>
-                                <option value="<?php echo $plan["id_plan"]; ?>">
-                                    <?php echo $plan["nombre_plan"]; ?>
+                            <?php# foreach ($planes as $plan) { ?>
+                                <option value="<?php# echo $plan["id_plan"]; ?>">
+                                    <?php# echo $plan["nombre_plan"]; ?>
                                 </option>
-                            <?php } ?>
+                            <?php# } ?>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Guardar Cliente</button>

@@ -92,10 +92,16 @@ $url = ControladorPlantilla::url();
                         #$rutas[0] == "editar_producto" ||
                         #$rutas[0] == "salir" ||
                         #$rutas[0] == "usuarios"
+                        $rutas[0] == "clientes" ||
+                        $rutas[0] == "agregar_cliente" ||
+                        $rutas[0] == "editar_cliente" ||
+                        $rutas[0] == "entrenadores" ||
+                        $rutas[0] == "agregar_entrenador" ||
+                        $rutas[0] == "editar_entrenador" ||
                         $rutas[0] == "planes" ||
                         $rutas[0] == "planes_agregar" ||
                         $rutas[0] == "planes_eliminar" ||
-                        $rutas[0] == "eplanes_editar"
+                        $rutas[0] == "planes_editar"
                         
                     ) {
                         
