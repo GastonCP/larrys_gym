@@ -50,7 +50,7 @@ $cantidad = count($clientes);
                                     <button
                                     class="btn btn-danger btnEliminarCliente"
                                     id_cliente=<?php echo $cliente["id_cliente"]; ?>
-                                    ><i class="fas fa-trash"></i> Eliminar</button></td>
+                                    ><i class="fas fa-trash"></i></button></td>
 
                                 </tr>
 

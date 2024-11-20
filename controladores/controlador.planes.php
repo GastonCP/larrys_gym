@@ -9,6 +9,8 @@ class ControladorPlanes
         return $respuesta;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     // Agregar un plan de entrenamiento
     public function ctrAgregarPlan()
     {
@@ -37,7 +39,9 @@ class ControladorPlanes
         }
     }
 
-    /*// Editar un plan de entrenamiento
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Editar un plan de entrenamiento
     public function ctrEditarPlan()
     {
         if (isset($_POST["id_plan"])) {
@@ -64,38 +68,10 @@ class ControladorPlanes
                 </script>';
             }
         }
-    }*/
-
-    public function ctrEditarPlan()
-    {
-        if (isset($_POST["id_plan"])) {
-            $tabla = "planes_entrenamiento";
-    
-            $datos = array(
-                "id_plan" => $_POST["id_plan"],
-                "nombre" => $_POST["nombre_plan"],
-                "duracion" => $_POST["duracion"],
-                "descripcion" => $_POST["descripcion"],
-                "precio" => $_POST["precio"]
-            );
-    
-            $respuesta = ModeloPlanes::mdlEditarPlan($tabla, $datos);
-    
-            if ($respuesta == "ok") {
-                $url = ControladorPlantilla::url() . "planes";
-                echo '<script>
-                    fncSweetAlert(
-                        "success",
-                        "El plan de entrenamiento se actualizó correctamente",
-                        "' . $url . '"
-                    );
-                </script>';
-            }
-        }
     }
 
-/////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////////
 
     // Eliminar un plan de entrenamiento
     static public function ctrEliminarPlan()
@@ -118,4 +94,7 @@ class ControladorPlanes
             }
         }
     }
-}
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+} // Fin de la Clase

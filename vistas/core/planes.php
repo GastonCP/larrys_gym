@@ -1,64 +1,74 @@
+<!-- FALTANTES -->
+<!-- → que pueda eliminar correctamente // btnEliminarPlan -->
+
 <?php
-$planes = ControladorPlanes::ctrMostrarPlanes(null, null); // Llamar al controlador para obtener todos los planes
+// Llamar al controlador para obtener todos los planes
+$planes = ControladorPlanes::ctrMostrarPlanes(null, null); 
+$cantidad = count($planes);
 ?>
 
+<div class="row">
+    <div class="col-12">
+        <h1>Planes</h1>
+        <Planes(s="card">
+            <div class="card-header">
+                <a href="planes_agregar" class="btn btn-info">Agregar Nuevo Plan</a>
+            </div>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Planes</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Listado de Planes de Entrenamiento</h1>
+            <?php if ($cantidad > 0) { ?>
+                <div class="card-body">
+                    <table id="datatable" class="table table-bordered table-striped dt-responsive table-responsive nowrap">
+                        <thead>
+                            <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Duración (Mes)</th>
+                            <th>Sesiones (Sem)</th>
+                            <th>Entrenador</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($planes as $plan) { ?>
+                            <tr>
+                                <td><?php echo $plan["id_plan"]; ?></td>
+                                <td><?php echo $plan["nombre_plan"]; ?></td>
+                                <td><?php echo $plan["duracion"]; ?></td>
+                                <td><?php echo $plan["sesiones"]; ?></td>
+                                <td><?php echo $plan["id_entrenador"]; ?></td>
+                                <td><?php echo $plan["precio"]; ?></td>
+                                <td>
 
-        <!-- Tabla de Planes -->
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Duración (Mes)</th>
-                    <th>Sesiones (Sem)</th>
-                    <th>Entrenador</th>
-                    <th>Precio</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($planes as $plan) {
-                    echo '<tr>
-                            <td>' . $plan["id_plan"] . '</td>
-                            <td>' . $plan["nombre_plan"] . '</td>
-                            <td>' . $plan["duracion"] . '</td>
-                            <td>' . $plan["sesiones"] . '</td>
-                            <td>' . $plan["id_entrenador"] . '</td>
-                            <td>$' . $plan["precio"] . '</td>
-                            <td>';?>
-                            <td>
-                            <a href="planes_editar/<?php echo $plan["id_plan"]; ?>" class="btn btn-warning"> 
-                            <i class="fas fa-edit"></i> Editar</a>
+                                    <!-- Boton Ediar Plan -->
+                                    <a href="planes_editar/<?php echo $plan["id_plan"]; ?>" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
 
-                            <!-- <a href="planes_eliminar/<?php# echo $plan["id_plan"]; ?>" class="btn btn-danger">  -->
-                            <!-- <i class="fas fa-trash"></i> Eliminar</button> -->
-                            </td>
-                    <?php echo '</td></tr>';
-                }
-                ?>
-            </tbody>
-        </table>
-        
-        <!-- Se llama de esta forma para que se guie implementando el url -->
-        <a href="<?php echo $url; ?>core/planes_agregar" 
-        class="btn btn-primary">Agregar Nuevo Plan</a>
-        
+                                     <!-- Boton Eliminar Plan -->
+                                    <button
+                                    class="btn btn-danger btnEliminarPlan"
+                                    id_plan=<?php echo $plan["id_plan"]; ?>
+                                    ><i class="fas fa-trash"></i></button></td>
+
+                                </tr>
+
+                                <input type="hidden" id="url" value="<?php echo $url; ?>">
+
+                            <?php } ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            <?php } else { ?>
+                <h3>No hay Planes de Entrenamiento registrados</h3>
+            <?php } ?>
+        </div>
     </div>
-</body>
-</html>
+</div>
 
-<?php
-# Se podria acomodar para que por diga mes/meses y semana / semanas 
+<?php 
+
+$eliminar = new ControladorPlanes();
+$eliminar -> ctrEliminarPlanes();
+?>

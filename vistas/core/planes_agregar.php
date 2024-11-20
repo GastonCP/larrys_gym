@@ -29,9 +29,9 @@
             </div>
 
             <div class="mb-3">
-                <label for="id_entrenador" class="form-label">Entrenador</label>
-                <select class="form-select" id="id_entrenador" name="id_entrenador" required>
-                    <option value="" selected disabled>Seleccione un entrenador</option>
+                <!-- <label for="id_entrenador" class="form-label">Entrenador</label> -->
+                <!-- <select class="form-select" id="id_entrenador" name="id_entrenador" required> -->
+                    <!-- <option value="" selected disabled>Seleccione un entrenador</option> -->
                     
                     
                     <!-- Espacio para listar entrenadores mergeando -->   
