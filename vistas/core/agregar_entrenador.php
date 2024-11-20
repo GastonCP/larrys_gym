@@ -1,14 +1,6 @@
-<?php
-
-
-$planes = ModeloPlanes::mdlMostrarPlanes();
-
-?>
-
-
 <div class="row">
     <div class="col-12">
-        <h1>Agregar Cliente</h1>
+        <h1>Agregar Entrenador</h1>
         <div class="card">
             <form method="POST">
                 <div class="card-body">
@@ -25,14 +17,6 @@ $planes = ModeloPlanes::mdlMostrarPlanes();
                         <input type="text" class="form-control" id="apellido" name="apellido" required>
                     </div>
                     <div class="form-group">
-                        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="direccion">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" required>
-                    </div>
-                    <div class="form-group">
                         <label for="telefono">Teléfono</label>
                         <input type="text" class="form-control" id="telefono" name="telefono" required>
                     </div>
@@ -41,8 +25,8 @@ $planes = ModeloPlanes::mdlMostrarPlanes();
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="fecha_inscripcion">Fecha de Inscripción</label>
-                        <input type="date" class="form-control" id="fecha_inscripcion" name="fecha_inscripcion" required>
+                        <label for="fecha_contratacion">Fecha de Contratación</label>
+                        <input type="date" class="form-control" id="fecha_contratacion" name="fecha_contratacion" required>
                     </div>
                     <div class="form-group">
                         <label for="estado">Estado</label>
@@ -51,19 +35,9 @@ $planes = ModeloPlanes::mdlMostrarPlanes();
                             <option value="0">Inactivo</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="plan">Plan</label>
-                        <select class="form-control" id="plan" name="plan" required>
-                            <?php foreach ($planes as $plan) { ?>
-                                <option value="<?php echo $plan["id_plan"]; ?>">
-                                    <?php echo $plan["nombre_plan"]; ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+                    <button type="submit" class="btn btn-primary">Guardar Entrenador</button>
                 </div>
             </form>
         </div>
@@ -71,6 +45,7 @@ $planes = ModeloPlanes::mdlMostrarPlanes();
 </div>
 
 <?php
-$agregarCliente = new ControladorClientes();
-$agregarCliente->ctrAgregarCliente();
+// Invocar el controlador para agregar el entrenador
+$agregarEntrenador = new ControladorEntrenadores();
+$agregarEntrenador->ctrAgregarEntrenador();
 ?>

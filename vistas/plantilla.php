@@ -82,34 +82,33 @@ $url = ControladorPlantilla::url();
 
                     $rutas = explode('/', $_GET["pagina"]);
 
-                    //echo "<pre>";
-                    //print_r($rutas);
-                    //echo "</pre>";
                     if (
-                        #$rutas[0] == "categorias" ||
-                        #$rutas[0] == "productos" ||
-                        #$rutas[0] == "agregar_producto" ||
-                        #$rutas[0] == "editar_producto" ||
-                        #$rutas[0] == "salir" ||
+
                         #$rutas[0] == "usuarios"
+
                         $rutas[0] == "clientes" ||
                         $rutas[0] == "agregar_cliente" ||
                         $rutas[0] == "editar_cliente" ||
                         $rutas[0] == "entrenadores" ||
                         $rutas[0] == "agregar_entrenador" ||
                         $rutas[0] == "editar_entrenador" ||
+                        $rutas[0] == "especialidades" ||
+                        $rutas[0] == "agregar_especialidad" ||
+                        $rutas[0] == "editar_especialidad" ||
+
                         $rutas[0] == "planes" ||
                         $rutas[0] == "planes_agregar" ||
                         $rutas[0] == "planes_eliminar" ||
-                        $rutas[0] == "planes_editar"
+                        $rutas[0] == "planes_editar" ||
+                        $rutas[0] == "pagos" ||
+                        $rutas[0] == "pagos_agregar" ||
+                        $rutas[0] == "pagos_eliminar" ||
+                        $rutas[0] == "pagos_editar"
+
+                        #$rutas[0] == "salir"
                         
                     ) {
-                        
-                        #include "vistas/modulos/" . $rutas[0] . ".php";
-                        #Reemplace la linea anterioro con esta, y cree la carpeta ../vistas/core
-                        #En la carpeta core podemos dejar las ventanas que creemos para no confundirnos con las de los modulos
                         include "vistas/core/" . $rutas[0] . ".php";
-                        
                     } else {
                         include "vistas/modulos/404.php";
                     }

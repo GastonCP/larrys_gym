@@ -12,8 +12,8 @@ if (isset($_GET["pagina"])) {
 
     $cliente = ControladorClientes::ctrMostrarClientes($item, $valor);
 
-    // Obtener los planes de entrenamiento Por ahora no
-    #$planes = ModeloPlanes::mdlMostrarPlanes("planes_entrenamiento");
+    // Obtener los planes de entrenamiento
+    $planes = ModeloPlanes::mdlMostrarPlanes("planes_entrenamiento");
 }
 
 // Si no hay cliente, mostrar un mensaje de error
@@ -80,16 +80,16 @@ if (!$cliente) {
                 </select>
             </div>
 
-            <!--<div class="mb-3">
+            <div class="mb-3">
                 <label>Plan</label>
                 <select name="plan" class="form-control">
-                    <?php# foreach ($planes as $plan) { ?>
-                        <option value="<?php# echo $plan["id_plan"]; ?>" <?php# echo $cliente["id_plan"] == $plan["id_plan"] ? "selected" : ""; ?>>
-                            <?php# echo $plan["nombre_plan"]; ?>
+                    <?php foreach ($planes as $plan) { ?>
+                        <option value="<?php echo $plan["id_plan"]; ?>" <?php echo $cliente["id_plan"] == $plan["id_plan"] ? "selected" : ""; ?>>
+                            <?php echo $plan["nombre_plan"]; ?>
                         </option>
-                    <?php# } ?>
+                    <?php } ?>
                 </select>
-            </div> -->
+            </div>
 
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         </form>

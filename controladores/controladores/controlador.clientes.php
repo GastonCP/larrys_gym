@@ -16,16 +16,16 @@ class ControladorClientes
             $tabla = "clientes";
 
             $datos = array(
-                #"dni" => $_POST["dni"],
-                #"nombre" => $_POST["nombre"],
-                #"apellido" => $_POST["apellido"],
-                #"fecha_nacimiento" => $_POST["fecha_nacimiento"],
-                #"direccion" => $_POST["direccion"],
-                #"telefono" => $_POST["telefono"],
-                #"email" => $_POST["email"],
-                #"fecha_inscripcion" => $_POST["fecha_inscripcion"],
-                #"estado" => $_POST["estado"],
-                #"id_plan" => $_POST["plan"]
+                "dni" => $_POST["dni"],
+                "nombre" => $_POST["nombre"],
+                "apellido" => $_POST["apellido"],
+                "fecha_nacimiento" => $_POST["fecha_nacimiento"],
+                "direccion" => $_POST["direccion"],
+                "telefono" => $_POST["telefono"],
+                "email" => $_POST["email"],
+                "fecha_inscripcion" => $_POST["fecha_inscripcion"],
+                "estado" => $_POST["estado"],
+                "id_plan" => $_POST["plan"]
             );
 
             $respuesta = ModeloClientes::mdlAgregarCliente($tabla, $datos);
@@ -49,17 +49,17 @@ class ControladorClientes
             $tabla = "clientes";
     
             $datos = array(
-                #"id_cliente" => $_POST["id_cliente"],
-                #"dni" => $_POST["dni"],
-                #"nombre" => $_POST["nombre"],
-                #"apellido" => $_POST["apellido"],
-                #"fecha_nacimiento" => $_POST["fecha_nacimiento"],
-                #"direccion" => $_POST["direccion"],
-                #"telefono" => $_POST["telefono"],
-                #"email" => $_POST["email"],
-                #"fecha_inscripcion" => $_POST["fecha_inscripcion"],
-                #"estado" => $_POST["estado"],
-                #"id_plan" => $_POST["plan"]
+                "id_cliente" => $_POST["id_cliente"],
+                "dni" => $_POST["dni"],
+                "nombre" => $_POST["nombre"],
+                "apellido" => $_POST["apellido"],
+                "fecha_nacimiento" => $_POST["fecha_nacimiento"],
+                "direccion" => $_POST["direccion"],
+                "telefono" => $_POST["telefono"],
+                "email" => $_POST["email"],
+                "fecha_inscripcion" => $_POST["fecha_inscripcion"],
+                "estado" => $_POST["estado"],
+                "id_plan" => $_POST["plan"]
             );
     
             $respuesta = ModeloClientes::mdlEditarCliente($tabla, $datos);
