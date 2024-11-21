@@ -102,3 +102,24 @@ $(document).on("click", ".btnEliminarEspecialidad", function () {
       }
     });
   });
+
+  $(document).on("click", ".btnEliminarPago", function () {
+   
+    let id_pago = $(this).attr("id_pago"); 
+  
+    Swal.fire({
+      title: "Está seguro de eliminar el pago?",
+      text: "Sino lo está puede cancelar la acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Si, eliminar pago",
+    }).then(function (result) {
+      if (result.value) {
+        window.location =
+          "index.php?pagina=pagoes&id_pago_eliminar=" + id_pago;
+      }
+    });
+  });

@@ -117,7 +117,7 @@ $url = ControladorPlantilla::url();
                         $rutas[0] == "planes_editar" ||
                         $rutas[0] == "pagos" ||
                         $rutas[0] == "pagos_agregar" ||
-                        $rutas[0] == "pagos_eliminar" ||
+                        // $rutas[0] == "pagos_eliminar" ||
                         $rutas[0] == "pagos_editar"
 
                         #$rutas[0] == "salir"

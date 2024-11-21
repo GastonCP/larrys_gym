@@ -24,8 +24,8 @@ require_once 'modelos/modelo.planes.php';
 require_once 'controladores/controlador.planes.php';
 
 # Metodos de pagos
-#require_once 'modelos/modelo.pagos.php';
-#require_once 'controladores/controlador.pagos.php';
+require_once 'modelos/modelo.pagos.php';
+require_once 'controladores/controlador.pagos.php';
 
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrMostrarPlantilla();

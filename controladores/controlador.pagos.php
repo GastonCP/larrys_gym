@@ -1,75 +1,54 @@
 <?php
 
-class ControladorClientes
+class ControladorPagos
 {
-    // Mostrar clientes
-    static public function ctrMostrarClientes($item, $valor)
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Mostrar todos los pagos
+    static public function ctrMostrarPagos()
     {
-        $respuesta = ModeloClientes::mdlMostrarClientes($item, $valor);
+        $tabla = "pagos";
+        $respuesta = ModeloPagos::mdlMostrarPagos($tabla);
         return $respuesta;
     }
 
-    // Método para agregar clientes
-    static public function ctrAgregarCliente()
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Mostrar un pago específico
+    static public function ctrMostrarPago($item, $valor)
     {
-        if (isset($_POST["dni"])) {
-            $tabla = "clientes";
-
-            $datos = array(
-                #"dni" => $_POST["dni"],
-                #"nombre" => $_POST["nombre"],
-                #"apellido" => $_POST["apellido"],
-                #"fecha_nacimiento" => $_POST["fecha_nacimiento"],
-                #"direccion" => $_POST["direccion"],
-                #"telefono" => $_POST["telefono"],
-                #"email" => $_POST["email"],
-                #"fecha_inscripcion" => $_POST["fecha_inscripcion"],
-                #"estado" => $_POST["estado"],
-                #"id_plan" => $_POST["plan"]
-            );
-
-            $respuesta = ModeloClientes::mdlAgregarCliente($tabla, $datos);
-
-            if ($respuesta == "ok") {
-                $url = ControladorPlantilla::url() . "clientes";
-                echo '<script>
-                    fncSweetAlert(
-                        "success",
-                        "El cliente se agregó correctamente",
-                        "' . $url . '"
-                    );
-                </script>';
-            }
-        }
+        $tabla = "pagos";
+        $respuesta = ModeloPagos::mdlMostrarPago($tabla, $item, $valor);
+        return $respuesta;
     }
 
-    public function ctrEditarCliente()
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Agregar un nuevo pago
+    public function ctrAgregarPago()
     {
         if (isset($_POST["id_cliente"])) {
-            $tabla = "clientes";
-    
+            $tabla = "pagos";
+
             $datos = array(
-                #"id_cliente" => $_POST["id_cliente"],
-                #"dni" => $_POST["dni"],
-                #"nombre" => $_POST["nombre"],
-                #"apellido" => $_POST["apellido"],
-                #"fecha_nacimiento" => $_POST["fecha_nacimiento"],
-                #"direccion" => $_POST["direccion"],
-                #"telefono" => $_POST["telefono"],
-                #"email" => $_POST["email"],
-                #"fecha_inscripcion" => $_POST["fecha_inscripcion"],
-                #"estado" => $_POST["estado"],
-                #"id_plan" => $_POST["plan"]
+                "id_cliente" => $_POST["id_cliente"],
+                "fecha_pago" => $_POST["fecha_pago"],
+                "monto" => $_POST["monto"],
+                "metodo_pago" => $_POST["metodo_pago"],
+                "id_clase" => $_POST["id_clase"],
+                "estado" => $_POST["estado"],
+                "id_plan" => $_POST["id_plan"],
+                "estado_cliente" => $_POST["estado_cliente"]
             );
-    
-            $respuesta = ModeloClientes::mdlEditarCliente($tabla, $datos);
-    
+
+            $respuesta = ModeloPagos::mdlAgregarPago($tabla, $datos);
+
             if ($respuesta == "ok") {
-                $url = ControladorPlantilla::url() . "clientes";
+                $url = ControladorPlantilla::url() . "pagos";
                 echo '<script>
                     fncSweetAlert(
                         "success",
-                        "El cliente se actualizó correctamente",
+                        "El pago se agregó correctamente",
                         "' . $url . '"
                     );
                 </script>';
@@ -77,26 +56,66 @@ class ControladorClientes
         }
     }
 
-    static public function ctrEliminarCliente()
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Editar un pago existente
+    public function ctrEditarPago()
     {
-        if (isset($_GET["id_cliente_eliminar"])) {
+        if (isset($_POST["id_pago"])) {
+            $tabla = "pagos";
 
-            $url = ControladorPlantilla::url() . "clientes";
-            $tabla = "clientes";
-            $dato = $_GET["id_cliente_eliminar"];
+            $datos = array(
+                "id_pago" => $_POST["id_pago"],
+                "id_cliente" => $_POST["id_cliente"],
+                "fecha_pago" => $_POST["fecha_pago"],
+                "monto" => $_POST["monto"],
+                "metodo_pago" => $_POST["metodo_pago"],
+                "id_clase" => $_POST["id_clase"],
+                "estado" => $_POST["estado"],
+                "id_plan" => $_POST["id_plan"],
+                "estado_cliente" => $_POST["estado_cliente"]
+            );
 
-            $respuesta = ModeloClientes::mdlEliminarCliente($tabla, $dato);
+            $respuesta = ModeloPagos::mdlEditarPago($tabla, $datos);
 
             if ($respuesta == "ok") {
+                $url = ControladorPlantilla::url() . "pagos";
                 echo '<script>
-                fncSweetAlert("success", "El cliente se eliminó correctamente", "' . $url . '");
+                    fncSweetAlert(
+                        "success",
+                        "El pago se editó correctamente",
+                        "' . $url . '"
+                    );
                 </script>';
-                        }
-                    }
+            }
+        }
     }
 
-    
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Eliminar un pago
+    static public function ctrEliminarPago()
+    {
+        if (isset($_GET["id_pago_eliminar"])) {
+            $tabla = "pagos";
+            $id_pago = $_GET["id_pago_eliminar"];
+
+            $respuesta = ModeloPagos::mdlEliminarPago($tabla, $id_pago);
+
+            if ($respuesta == "ok") {
+                $url = ControladorPlantilla::url() . "pagos";
+                echo '<script>
+                    fncSweetAlert(
+                        "success",
+                        "El pago se eliminó correctamente",
+                        "' . $url . '"
+                    );
+                </script>';
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
 }
 
 ?>
-

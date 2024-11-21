@@ -29,14 +29,6 @@
 
                             <!-- Inicio Opciones del Menu -->
  
-                            <!--- 
-                            <li>
-                                <a href="<?php# echo $url; ?>usuarios">
-                                    <i data-feather="aperture"></i>
-                                    <span> Usuarios </span>
-                                </a>
-                            </li>
-                            -->
 
                             <li>
                                 <a href="<?php echo $url; ?>clientes">
