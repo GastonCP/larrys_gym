@@ -1,6 +1,6 @@
 <?php
-// Llamar al controlador para obtener todos los pagos
-$pagos = ControladorPagos::ctrMostrarPagos();
+// Llamar al controlador para obtener todos los pagos junto con el precio del plan asociado
+$pagos = ControladorPagos::ctrMostrarPagosConPrecios();
 $cantidad = count($pagos);
 ?>
 
@@ -19,13 +19,12 @@ $cantidad = count($pagos);
                             <tr>
                                 <th>ID</th>
                                 <th>Cliente</th>
+                                <th>Plan</th>
+                                <th>Precio</th>
                                 <th>Fecha de Pago</th>
-                                <th>Monto</th>
                                 <th>Método de Pago</th>
-                                <th>Clase</th>
                                 <th>Estado</th>
-                                <th>Plan Asociado</th>
-                                <th>Estado Cliente</th>
+                                <th>Descripción</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -34,13 +33,18 @@ $cantidad = count($pagos);
                             <tr>
                                 <td><?php echo $pago["id_pago"]; ?></td>
                                 <td><?php echo $pago["id_cliente"]; ?></td>
+                                <td><?php echo $pago["nombre_plan"]; ?></td>
+                                <td><?php echo "$ " . number_format($pago["precio"], 2); ?></td>
                                 <td><?php echo $pago["fecha_pago"]; ?></td>
-                                <td><?php echo "$ " . number_format($pago["monto"], 2); ?></td>
                                 <td><?php echo $pago["metodo_pago"]; ?></td>
-                                <td><?php echo $pago["id_clase"]; ?></td>
                                 <td><?php echo $pago["estado"]; ?></td>
-                                <td><?php echo $pago["id_plan"]; ?></td>
-                                <td><?php echo $pago["estado_cliente"]; ?></td>
+                                <td><?php echo $pago["descripcion"]; ?></td>
+                                <!-- <td>
+                                    <span class="badge badge-<?#php echo $pago["estado"] === 'COMPLETADO' ? 'success' : 'warning'; ?>">
+                                        <?php# echo $pago["estado"]; ?>
+                                    </span>
+                                </td>
+                                <td><?php# echo $pago["descripcion"]; ?></td> -->
                                 <td>
                                     <!-- Botón Editar Pago -->
                                     <a href="pagos_editar/<?php echo $pago['id_pago']; ?>" class="btn btn-warning">
@@ -50,15 +54,12 @@ $cantidad = count($pagos);
                                     <!-- Botón Eliminar Pago -->
                                     <button
                                         class="btn btn-danger btnEliminarPago"
-                                        id_pago=<?php echo $pago["id_pago"]; ?>
+                                        id_pago="<?php echo $pago["id_pago"]; ?>"
                                     >
                                         <i class="fas fa-trash"></i> Eliminar
                                     </button>
                                 </td>
                             </tr>
-
-                            <input type="hidden" id="url" value="<?php echo $url; ?>">
-
                         <?php } ?>
                         </tbody>
                     </table>
@@ -71,6 +72,7 @@ $cantidad = count($pagos);
 </div>
 
 <?php 
+// Eliminar pago
 $eliminar = new ControladorPagos();
 $eliminar->ctrEliminarPago();
 ?>

@@ -4,13 +4,14 @@ require_once 'conexion.php';
 
 class ModeloPagos
 {
+
     ////////////////////////////////////////////////////////////////////////////////
     
     // Mostrar todos los pagos
-    static public function mdlMostrarPagos($tabla)
+    static public function mdlMostrarPagos()
     {
         try {
-            $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM pagos");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
@@ -20,11 +21,11 @@ class ModeloPagos
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // Mostrar un pago específico por un campo
-    static public function mdlMostrarPago($tabla, $item, $valor)
+    // Mostrar un pago específico por id
+    static public function mdlMostrarPago($item, $valor)
     {
         try {
-            $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM pagos WHERE $item = :$item");
             $stmt->bindParam(":$item", $valor, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -32,26 +33,24 @@ class ModeloPagos
             return "Error: " . $e->getMessage();
         }
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // Agregar un nuevo pago
-    static public function mdlAgregarPago($tabla, $datos)
+    static public function mdlAgregarPago($datos)
     {
         try {
             $stmt = Conexion::conectar()->prepare(
-                "INSERT INTO $tabla (id_cliente, fecha_pago, monto, metodo_pago, id_clase, estado, id_plan, estado_cliente) 
-                VALUES (:id_cliente, :fecha_pago, :monto, :metodo_pago, :id_clase, :estado, :id_plan, :estado_cliente)"
+                "INSERT INTO pagos (id_cliente, id_plan, fecha_pago, metodo_pago, estado, descripcion) 
+                VALUES (:id_cliente, :id_plan, :fecha_pago, :metodo_pago, :estado, :descripcion)"
             );
 
             $stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
-            $stmt->bindParam(":fecha_pago", $datos["fecha_pago"], PDO::PARAM_STR);
-            $stmt->bindParam(":monto", $datos["monto"], PDO::PARAM_STR);
-            $stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
-            $stmt->bindParam(":id_clase", $datos["id_clase"], PDO::PARAM_INT);
-            $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
             $stmt->bindParam(":id_plan", $datos["id_plan"], PDO::PARAM_INT);
-            $stmt->bindParam(":estado_cliente", $datos["estado_cliente"], PDO::PARAM_STR);
+            $stmt->bindParam(":fecha_pago", $datos["fecha_pago"], PDO::PARAM_STR);
+            $stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
+            $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+            $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 return "ok";
@@ -63,29 +62,24 @@ class ModeloPagos
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-
     // Editar un pago existente
-    static public function mdlEditarPago($tabla, $datos)
+    static public function mdlEditarPago($datos)
     {
         try {
             $stmt = Conexion::conectar()->prepare(
-                "UPDATE $tabla 
-                SET id_cliente = :id_cliente, fecha_pago = :fecha_pago, monto = :monto, 
-                    metodo_pago = :metodo_pago, id_clase = :id_clase, estado = :estado, 
-                    id_plan = :id_plan, estado_cliente = :estado_cliente 
+                "UPDATE pagos 
+                SET id_cliente = :id_cliente, id_plan = :id_plan, fecha_pago = :fecha_pago, 
+                    metodo_pago = :metodo_pago, estado = :estado, descripcion = :descripcion 
                 WHERE id_pago = :id_pago"
             );
 
             $stmt->bindParam(":id_pago", $datos["id_pago"], PDO::PARAM_INT);
             $stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
-            $stmt->bindParam(":fecha_pago", $datos["fecha_pago"], PDO::PARAM_STR);
-            $stmt->bindParam(":monto", $datos["monto"], PDO::PARAM_STR);
-            $stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
-            $stmt->bindParam(":id_clase", $datos["id_clase"], PDO::PARAM_INT);
-            $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
             $stmt->bindParam(":id_plan", $datos["id_plan"], PDO::PARAM_INT);
-            $stmt->bindParam(":estado_cliente", $datos["estado_cliente"], PDO::PARAM_STR);
+            $stmt->bindParam(":fecha_pago", $datos["fecha_pago"], PDO::PARAM_STR);
+            $stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
+            $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+            $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 return "ok";
@@ -97,13 +91,11 @@ class ModeloPagos
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    
     // Eliminar un pago
-    static public function mdlEliminarPago($tabla, $id_pago)
+    static public function mdlEliminarPago($id_pago)
     {
         try {
-            $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_pago = :id_pago");
+            $stmt = Conexion::conectar()->prepare("DELETE FROM pagos WHERE id_pago = :id_pago");
             $stmt->bindParam(":id_pago", $id_pago, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
@@ -116,7 +108,26 @@ class ModeloPagos
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
+    public static function mdlMostrarPagosConPrecios($tablaPagos, $tablaPlanes) {
+        $stmt = Conexion::conectar()->prepare("
+            SELECT 
+                p.id_pago, 
+                p.id_cliente, 
+                p.fecha_pago, 
+                p.metodo_pago, 
+                p.estado, 
+                p.descripcion, 
+                pl.nombre_plan, 
+                pl.precio 
+            FROM $tablaPagos p
+            INNER JOIN $tablaPlanes pl ON p.id_plan = pl.id_plan
+        ");
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+
 
 }
 

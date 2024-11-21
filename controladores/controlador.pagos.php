@@ -4,21 +4,19 @@ class ControladorPagos
 {
     ////////////////////////////////////////////////////////////////////////////////
 
-    // Mostrar todos los pagos
-    static public function ctrMostrarPagos()
+    // Mostrar Pagos de entrenamiento
+    static public function ctrMostrarPagos($item, $valor)
     {
-        $tabla = "pagos";
-        $respuesta = ModeloPagos::mdlMostrarPagos($tabla);
+        $respuesta = ModeloPagos::mdlMostrarPagos($item, $valor);
         return $respuesta;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // Mostrar un pago específico
-    static public function ctrMostrarPago($item, $valor)
+    // Controlador Mostrar un plan de entrenamiento
+    static public function ctrMostrarPlan($item, $valor)
     {
-        $tabla = "pagos";
-        $respuesta = ModeloPagos::mdlMostrarPago($tabla, $item, $valor);
+        $respuesta = ModeloPagos::mdlMostrarPlan($item, $valor);
         return $respuesta;
     }
 
@@ -27,18 +25,16 @@ class ControladorPagos
     // Agregar un nuevo pago
     public function ctrAgregarPago()
     {
-        if (isset($_POST["id_cliente"])) {
+        if (isset($_POST["id_cliente"]) && isset($_POST["metodo_pago"])) {
             $tabla = "pagos";
 
             $datos = array(
                 "id_cliente" => $_POST["id_cliente"],
-                "fecha_pago" => $_POST["fecha_pago"],
-                "monto" => $_POST["monto"],
-                "metodo_pago" => $_POST["metodo_pago"],
-                "id_clase" => $_POST["id_clase"],
-                "estado" => $_POST["estado"],
                 "id_plan" => $_POST["id_plan"],
-                "estado_cliente" => $_POST["estado_cliente"]
+                "fecha_pago" => $_POST["fecha_pago"] ?? date("Y-m-d"),
+                "metodo_pago" => $_POST["metodo_pago"],
+                "estado" => $_POST["estado"] ?? "PENDIENTE",
+                "descripcion" => $_POST["descripcion"] ?? null,
             );
 
             $respuesta = ModeloPagos::mdlAgregarPago($tabla, $datos);
@@ -67,13 +63,11 @@ class ControladorPagos
             $datos = array(
                 "id_pago" => $_POST["id_pago"],
                 "id_cliente" => $_POST["id_cliente"],
-                "fecha_pago" => $_POST["fecha_pago"],
-                "monto" => $_POST["monto"],
-                "metodo_pago" => $_POST["metodo_pago"],
-                "id_clase" => $_POST["id_clase"],
-                "estado" => $_POST["estado"],
                 "id_plan" => $_POST["id_plan"],
-                "estado_cliente" => $_POST["estado_cliente"]
+                "fecha_pago" => $_POST["fecha_pago"],
+                "metodo_pago" => $_POST["metodo_pago"],
+                "estado" => $_POST["estado"],
+                "descripcion" => $_POST["descripcion"],
             );
 
             $respuesta = ModeloPagos::mdlEditarPago($tabla, $datos);
@@ -99,11 +93,11 @@ class ControladorPagos
         if (isset($_GET["id_pago_eliminar"])) {
             $tabla = "pagos";
             $id_pago = $_GET["id_pago_eliminar"];
+            $url = ControladorPlantilla::url() . "pagos";
 
             $respuesta = ModeloPagos::mdlEliminarPago($tabla, $id_pago);
 
             if ($respuesta == "ok") {
-                $url = ControladorPlantilla::url() . "pagos";
                 echo '<script>
                     fncSweetAlert(
                         "success",
@@ -115,7 +109,23 @@ class ControladorPagos
         }
     }
 
+
     ////////////////////////////////////////////////////////////////////////////////
+
+
+    static public function ctrMostrarPagosConPrecios() 
+    {
+        $tablaPagos = "pagos";
+        $tablaPlanes = "planes_entrenamiento";
+
+        $respuesta = ModeloPagos::mdlMostrarPagosConPrecios($tablaPagos, $tablaPlanes);
+
+        return $respuesta;
+    }
+
+
 }
+
+
 
 ?>

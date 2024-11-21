@@ -9,7 +9,7 @@ $url = ControladorPlantilla::url();
 <head>
 
     <meta charset="utf-8" />
-    <title>Sistema Lab 4</title>
+    <title>Larry's gym</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
     <meta name="author" content="Zoyothemes" />
@@ -115,6 +115,7 @@ $url = ControladorPlantilla::url();
                         $rutas[0] == "planes_agregar" ||
                         //$rutas[0] == "planes_eliminar" ||
                         $rutas[0] == "planes_editar" ||
+                        
                         $rutas[0] == "pagos" ||
                         $rutas[0] == "pagos_agregar" ||
                         // $rutas[0] == "pagos_eliminar" ||
