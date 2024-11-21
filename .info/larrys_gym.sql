@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2024 a las 00:40:07
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.1.6
+-- Tiempo de generación: 21-11-2024 a las 20:42:48
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,7 +39,7 @@ CREATE TABLE `clientes` (
   `fecha_inscripcion` date NOT NULL DEFAULT curdate(),
   `id_plan` int(11) DEFAULT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -73,7 +73,7 @@ CREATE TABLE `entrenadores` (
   `email` varchar(100) DEFAULT NULL,
   `fecha_contratacion` date NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `entrenadores`
@@ -93,7 +93,7 @@ INSERT INTO `entrenadores` (`id_entrenador`, `dni`, `nombre`, `apellido`, `telef
 CREATE TABLE `entrenador_especialidades` (
   `id_entrenador` int(11) NOT NULL,
   `id_especialidad` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `entrenador_especialidades`
@@ -115,7 +115,7 @@ INSERT INTO `entrenador_especialidades` (`id_entrenador`, `id_especialidad`) VAL
 CREATE TABLE `especialidades` (
   `id_especialidad` int(11) NOT NULL,
   `nombre_especialidad` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `especialidades`
@@ -131,6 +131,32 @@ INSERT INTO `especialidades` (`id_especialidad`, `nombre_especialidad`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pagos`
+--
+
+CREATE TABLE `pagos` (
+  `id_pago` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_plan` int(11) NOT NULL,
+  `fecha_pago` date NOT NULL,
+  `metodo_pago` enum('EFECTIVO','DEBITO','CREDITO','TRANSFERENCIA') NOT NULL,
+  `estado` enum('PENDIENTE','COMPLETADO') NOT NULL DEFAULT 'PENDIENTE',
+  `descripcion` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pagos`
+--
+
+INSERT INTO `pagos` (`id_pago`, `id_cliente`, `id_plan`, `fecha_pago`, `metodo_pago`, `estado`, `descripcion`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2024-11-21', 'DEBITO', 'COMPLETADO', 'descripcion de ejemplo', '2024-11-21 17:39:49', '2024-11-21 19:33:50'),
+(2, 2, 2, '2024-11-21', 'EFECTIVO', 'COMPLETADO', 'descripcion de ejemplo', '2024-11-21 17:41:46', '2024-11-21 17:41:46');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `planes_entrenamiento`
 --
 
@@ -141,16 +167,16 @@ CREATE TABLE `planes_entrenamiento` (
   `sesiones` int(11) NOT NULL,
   `precio` decimal(10,2) DEFAULT 0.00,
   `descripcion` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `planes_entrenamiento`
 --
 
 INSERT INTO `planes_entrenamiento` (`id_plan`, `nombre_plan`, `duracion`, `sesiones`, `precio`, `descripcion`) VALUES
-(1, 'Plan Básico', 1, 2, '1000.00', 'Para nuevos clientes'),
-(2, 'Plan Intermedio', 3, 3, '2500.00', 'Para clientes avanzados'),
-(3, 'Plan Avanzado', 6, 5, '5000.00', 'Entrenar duro es discriminar gordas');
+(1, 'Plan Básico', 1, 2, 1000.00, 'Para nuevos clientes'),
+(2, 'Plan Intermedio', 3, 3, 2500.00, 'Para clientes avanzados'),
+(3, 'Plan Avanzado mdf', 8, 7, 5750.00, 'Entrenar duro es discriminar gordas');
 
 --
 -- Índices para tablas volcadas
@@ -181,6 +207,34 @@ ALTER TABLE `entrenador_especialidades`
 --
 ALTER TABLE `especialidades`
   ADD PRIMARY KEY (`id_especialidad`);
+
+--
+-- Indices de la tabla `pagos`
+--
+ALTER TABLE `pagos`
+  ADD PRIMARY KEY (`id_pago`);
+
+--
+-- Indices de la tabla `planes_entrenamiento`
+--
+ALTER TABLE `planes_entrenamiento`
+  ADD PRIMARY KEY (`id_plan`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `pagos`
+--
+ALTER TABLE `pagos`
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `planes_entrenamiento`
+--
+ALTER TABLE `planes_entrenamiento`
+  MODIFY `id_plan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

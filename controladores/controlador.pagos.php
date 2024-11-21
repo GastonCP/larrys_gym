@@ -14,9 +14,9 @@ class ControladorPagos
     ////////////////////////////////////////////////////////////////////////////////
 
     // Controlador Mostrar un plan de entrenamiento
-    static public function ctrMostrarPlan($item, $valor)
+    static public function ctrMostrarPago($item, $valor)
     {
-        $respuesta = ModeloPagos::mdlMostrarPlan($item, $valor);
+        $respuesta = ModeloPagos::mdlMostrarPago($item, $valor);
         return $respuesta;
     }
 
@@ -122,6 +122,27 @@ class ControladorPagos
 
         return $respuesta;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Método para mostrar el pago por su ID
+    // public static function ctrMostrarPago($campo, $valor) {
+    //     $tabla = "pagos"; // Nombre de la tabla
+    //     $respuesta = ModeloPagos::mdlMostrarPago($tabla, $campo, $valor);
+    //     return $respuesta;
+    // }
+
+    // Método para actualizar el estado de un pago
+    public static function ctrActualizarPago($id_pago, $estado) {
+        $tabla = "pagos"; // Nombre de la tabla
+        $respuesta = ModeloPagos::mdlActualizarPago($tabla, $id_pago, $estado);
+        if ($respuesta) {
+            echo "<div class='alert alert-success'>El pago se actualizó correctamente.</div>";
+        } else {
+            echo "<div class='alert alert-danger'>Error al actualizar el pago.</div>";
+        }
+    }
+
 
 
 }

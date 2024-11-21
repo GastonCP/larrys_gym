@@ -126,7 +126,27 @@ class ModeloPagos
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
+    // Método para mostrar un pago
+    // public static function mdlMostrarPago($tabla, $campo, $valor) {
+    //     $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $campo = :$campo");
+    //     $stmt->bindParam(":$campo", $valor, PDO::PARAM_INT);
+    //     $stmt->execute();
+    //     return $stmt->fetch();
+    // }
+
+    // Método para actualizar el estado de un pago
+    public static function mdlActualizarPago($tabla, $id_pago, $estado) {
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado = :estado WHERE id_pago = :id_pago");
+        $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+        $stmt->bindParam(":id_pago", $id_pago, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 }
