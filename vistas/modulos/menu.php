@@ -64,6 +64,12 @@
                                     <span> Registro de Pagos </span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?php echo $url; ?>usuario">
+                                    <i data-feather="aperture"></i>
+                                    <span> Gestion de usuarios </span>
+                                </a>
+                            </li>
 
                             <!-- Cierre de Opciones del Menu -->
 
