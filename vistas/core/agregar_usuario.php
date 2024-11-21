@@ -32,15 +32,6 @@
                     <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
                 </div>
 
-                <!-- Campo Rol -->
-                <div class="mb-3">
-                    <label for="rol" class="form-label">Rol</label>
-                    <select name="rol" class="form-select" required>
-                        <option value="admin">Administrador</option>
-                        <option value="usuario">Usuario</option>
-                    </select>
-                </div>
-
                 <?php
                 $guardar = new ControladorUsuarios();
                 $guardar->ctrAgregarUsuarios();

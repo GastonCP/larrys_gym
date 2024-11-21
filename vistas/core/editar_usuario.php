@@ -44,14 +44,7 @@ $usuario = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
                     <small>Deje en blanco si no desea cambiar la contraseña.</small>
                 </div>
 
-                <!-- Campo Rol -->
-                <div class="mb-3">
-                    <label for="rol" class="form-label">Rol</label>
-                    <select name="rol" class="form-select" required>
-                        <option value="admin" <?php echo $usuario['rol_usuario'] == 'admin' ? 'selected' : ''; ?>>Administrador</option>
-                        <option value="usuario" <?php echo $usuario['rol_usuario'] == 'usuario' ? 'selected' : ''; ?>>Usuario</option>
-                    </select>
-                </div>
+
 
                 <!-- Campo ID de usuario (oculto para evitar cambios accidentales) -->
                 <input type="hidden" name="id_usuario" value="<?php echo $usuario['id_usuario']; ?>">

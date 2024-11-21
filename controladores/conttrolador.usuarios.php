@@ -11,7 +11,7 @@ class ControladorUsuarios
 
             if (!empty($email) && !empty($password)) {
                 global $conn;
-                $sql = "SELECT id, email, contraseña, rol FROM usuarios WHERE email = ?";
+                $sql = "SELECT id_usuario, email_usuario, contrasena_usuario FROM usuarios WHERE email_usuario = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("s", $email);
                 $stmt->execute();
@@ -19,17 +19,12 @@ class ControladorUsuarios
 
                 if ($result->num_rows === 1) {
                     $user = $result->fetch_assoc();
-                    if (password_verify($password, $user['contraseña'])) {
-                        $_SESSION['user_id'] = $user['id'];
-                        $_SESSION['email'] = $user['email'];
-                        $_SESSION['role'] = $user['rol'];
+                    if (password_verify($password, $user['contrasena_usuario'])) {
+                        $_SESSION['user_id'] = $user['id_usuario'];
+                        $_SESSION['email'] = $user['email_usuario'];
 
-                        // Redirigir según el rol
-                        if ($user['rol'] === 'admin') {
-                            header("Location: admin_dashboard.php");
-                        } else {
-                            header("Location: dashboard.php");
-                        }
+                        // Redirigir al dashboard principal
+                        header("Location: dashboard.php");
                         exit;
                     } else {
                         return "Credenciales incorrectas.";
@@ -43,34 +38,28 @@ class ControladorUsuarios
         }
     }
 
-    // Método para mostrar todos los usuarios (solo para admins)
+    // Método para mostrar todos los usuarios
     public static function ctrMostrarUsuarios()
     {
-        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-            global $conn;
-            $sql = "SELECT id, nombre, email, rol FROM usuarios";
-            return $conn->query($sql);
-        } else {
-            header("Location: login.php");
-            exit;
-        }
+        global $conn;
+        $sql = "SELECT id_usuario, nombre_usuario, email_usuario FROM usuarios";
+        return $conn->query($sql);
     }
 
-    // Método para agregar un nuevo usuario (solo para admins)
+    // Método para agregar un nuevo usuario
     public static function ctrAgregarUsuarios()
     {
-        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             global $conn;
             $nombre = trim($_POST['nombre']);
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
-            $rol = trim($_POST['rol']);
 
-            if (!empty($nombre) && !empty($email) && !empty($password) && !empty($rol)) {
+            if (!empty($nombre) && !empty($email) && !empty($password)) {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO usuarios (nombre, email, contraseña, rol) VALUES (?, ?, ?, ?)";
+                $sql = "INSERT INTO usuarios (nombre_usuario, email_usuario, contrasena_usuario) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssss", $nombre, $email, $hashed_password, $rol);
+                $stmt->bind_param("sss", $nombre, $email, $hashed_password);
 
                 if ($stmt->execute()) {
                     header("Location: usuarios.php");
@@ -84,19 +73,18 @@ class ControladorUsuarios
         }
     }
 
-    // Método para editar un usuario (solo para admins)
+    // Método para editar un usuario
     public static function ctrEditarUsuarios()
     {
-        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             global $conn;
-            $id = $_POST['id'];
+            $id = $_POST['id_usuario'];
             $nombre = trim($_POST['nombre']);
             $email = trim($_POST['email']);
-            $rol = trim($_POST['rol']);
 
-            $sql = "UPDATE usuarios SET nombre = ?, email = ?, rol = ? WHERE id = ?";
+            $sql = "UPDATE usuarios SET nombre_usuario = ?, email_usuario = ? WHERE id_usuario = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssi", $nombre, $email, $rol, $id);
+            $stmt->bind_param("ssi", $nombre, $email, $id);
 
             if ($stmt->execute()) {
                 header("Location: usuarios.php");
@@ -107,13 +95,13 @@ class ControladorUsuarios
         }
     }
 
-    // Método para eliminar un usuario (solo para admins)
+    // Método para eliminar un usuario
     public static function ctrEliminarUsuarios()
     {
-        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+        if (isset($_GET['id_usuario'])) {
             global $conn;
-            $id = $_GET['id'];
-            $sql = "DELETE FROM usuarios WHERE id = ?";
+            $id = $_GET['id_usuario'];
+            $sql = "DELETE FROM usuarios WHERE id_usuario = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $id);
 
@@ -127,4 +115,3 @@ class ControladorUsuarios
     }
 }
 ?>
-

@@ -16,7 +16,6 @@
                             <th>Apellido</th>
                             <th>Usuario</th>
                             <th>Email</th>
-                            <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -31,7 +30,6 @@
                                 <td><?php echo $usuario["apellido_usuario"]; ?></td>
                                 <td><?php echo $usuario["cuenta_usuario"]; ?></td>
                                 <td><?php echo $usuario["email_usuario"]; ?></td>
-                                <td><?php echo $usuario["rol_usuario"]; ?></td>
                                 <td>
                                     <!-- Enlace para editar el usuario -->
                                     <a href="editar_usuario.php?id_usuario=<?php echo $usuario["id_usuario"]; ?>" class="btn btn-warning">
