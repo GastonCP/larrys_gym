@@ -100,6 +100,9 @@ $url = ControladorPlantilla::url();
                     if (
 
                         #$rutas[0] == "usuarios"
+                        $rutas[0] == "usuarios" ||
+                        $rutas[0] == "agregar_usuarios" ||
+                        $rutas[0] == "editar_usuario" ||
 
                         $rutas[0] == "clientes" ||
                         $rutas[0] == "agregar_cliente" ||
