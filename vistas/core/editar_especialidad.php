@@ -34,6 +34,7 @@ if (!$especialidad) {
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a href="<?php echo $url; ?>especialidades" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </div>

@@ -92,6 +92,7 @@ if (!$cliente) {
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a href="<?php echo $url; ?>clientes" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </div>

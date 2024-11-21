@@ -52,11 +52,26 @@ $url = ControladorPlantilla::url();
     <script src="<?php echo $url; ?>vistas/assets/js/alerts.js"></script>
     <script src="<?php echo $url; ?>vistas/assets/js/eliminar.js"></script>
 
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
 </head>
 
 <!-- body start -->
 
 <?php #if (isset($_SESSION["iniciarSesion"])) { ?>
+
+    <!-- Select2 -->
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Seleccione una o más opciones",
+                allowClear: true
+            });
+        });
+    </script>
 
     <body data-menu-color="dark" data-sidebar="default">
 
@@ -98,7 +113,7 @@ $url = ControladorPlantilla::url();
 
                         $rutas[0] == "planes" ||
                         $rutas[0] == "planes_agregar" ||
-                        $rutas[0] == "planes_eliminar" ||
+                        //$rutas[0] == "planes_eliminar" ||
                         $rutas[0] == "planes_editar" ||
                         $rutas[0] == "pagos" ||
                         $rutas[0] == "pagos_agregar" ||

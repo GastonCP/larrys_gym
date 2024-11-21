@@ -64,6 +64,7 @@ $planes = ModeloPlanes::mdlMostrarPlanes();
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+                    <a href="<?php echo $url; ?>clientes" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

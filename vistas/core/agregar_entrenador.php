@@ -38,6 +38,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Guardar Entrenador</button>
+                    <a href="<?php echo $url; ?>entrenadores" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

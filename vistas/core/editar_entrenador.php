@@ -89,6 +89,7 @@ if (!$entrenador) {
 
 
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a href="<?php echo $url; ?>entrenadores" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </div>

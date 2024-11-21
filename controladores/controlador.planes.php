@@ -20,11 +20,11 @@ class ControladorPlanes
             $datos = array(
                 "nombre" => $_POST["nombre_plan"],
                 "duracion" => $_POST["duracion"],
-                "descripcion" => $_POST["descripcion"],
+                //"descripcion" => $_POST["descripcion"],
                 "precio" => $_POST["precio"]
             );
 
-            $url = ControladorPlantilla::url() . "planes";
+            //$url = ControladorPlantilla::url() . "planes";
             $respuesta = ModeloPlanes::mdlAgregarPlan($tabla, $datos);
 
             if ($respuesta == "ok") {
@@ -74,25 +74,22 @@ class ControladorPlanes
     ////////////////////////////////////////////////////////////////////////////////
 
     // Eliminar un plan de entrenamiento
-    static public function ctrEliminarPlan()
+    static public function ctrEliminarPlanes()
     {
         if (isset($_GET["id_plan_eliminar"])) {
+
+            $url = ControladorPlantilla::url() . "planes";
             $tabla = "planes_entrenamiento";
             $dato = $_GET["id_plan_eliminar"];
 
-            $url = ControladorPlantilla::url() . "planes";
             $respuesta = ModeloPlanes::mdlEliminarPlan($tabla, $dato);
 
             if ($respuesta == "ok") {
                 echo '<script>
-                    fncSweetAlert(
-                        "success",
-                        "El plan de entrenamiento se eliminó correctamente",
-                        "' . $url . '"
-                    );
+                fncSweetAlert("success", "El plan se eliminó correctamente", "' . $url . '");
                 </script>';
-            }
-        }
+                        }
+                    }
     }
 
     ////////////////////////////////////////////////////////////////////////////////

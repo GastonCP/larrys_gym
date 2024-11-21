@@ -11,6 +11,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Guardar Especialidad</button>
+                    <a href="<?php echo $url; ?>especialidades" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

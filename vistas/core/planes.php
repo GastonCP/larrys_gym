@@ -10,7 +10,7 @@ $cantidad = count($planes);
 <div class="row">
     <div class="col-12">
         <h1>Planes</h1>
-        <Planes(s="card">
+        <Planes(s="card")>
             <div class="card-header">
                 <a href="planes_agregar" class="btn btn-info">Agregar Nuevo Plan</a>
             </div>
