@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-11-2024 a las 14:13:57
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 21-11-2024 a las 00:40:07
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,7 +39,7 @@ CREATE TABLE `clientes` (
   `fecha_inscripcion` date NOT NULL DEFAULT curdate(),
   `id_plan` int(11) DEFAULT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -73,7 +73,7 @@ CREATE TABLE `entrenadores` (
   `email` varchar(100) DEFAULT NULL,
   `fecha_contratacion` date NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `entrenadores`
@@ -93,7 +93,7 @@ INSERT INTO `entrenadores` (`id_entrenador`, `dni`, `nombre`, `apellido`, `telef
 CREATE TABLE `entrenador_especialidades` (
   `id_entrenador` int(11) NOT NULL,
   `id_especialidad` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `entrenador_especialidades`
@@ -115,7 +115,7 @@ INSERT INTO `entrenador_especialidades` (`id_entrenador`, `id_especialidad`) VAL
 CREATE TABLE `especialidades` (
   `id_especialidad` int(11) NOT NULL,
   `nombre_especialidad` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `especialidades`
@@ -137,20 +137,20 @@ INSERT INTO `especialidades` (`id_especialidad`, `nombre_especialidad`) VALUES
 CREATE TABLE `planes_entrenamiento` (
   `id_plan` int(11) NOT NULL,
   `nombre_plan` varchar(100) NOT NULL,
-  `duracion` int(11) NOT NULL COMMENT 'Duración en semanas o meses',
-  `sesiones` int(11) NOT NULL COMMENT 'Cantidad de sesiones por semana',
-  `id_entrenador` int(11) NOT NULL,
-  `precio` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `duracion` int(11) NOT NULL,
+  `sesiones` int(11) NOT NULL,
+  `precio` decimal(10,2) DEFAULT 0.00,
+  `descripcion` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `planes_entrenamiento`
 --
 
-INSERT INTO `planes_entrenamiento` (`id_plan`, `nombre_plan`, `duracion`, `sesiones`, `id_entrenador`, `precio`) VALUES
-(1, 'Plan Básico', 1, 2, 1, 1000.00),
-(2, 'Plan Intermedio', 3, 3, 2, 2500.00),
-(3, 'Plan Avanzado', 6, 5, 3, 5000.00);
+INSERT INTO `planes_entrenamiento` (`id_plan`, `nombre_plan`, `duracion`, `sesiones`, `precio`, `descripcion`) VALUES
+(1, 'Plan Básico', 1, 2, '1000.00', 'Para nuevos clientes'),
+(2, 'Plan Intermedio', 3, 3, '2500.00', 'Para clientes avanzados'),
+(3, 'Plan Avanzado', 6, 5, '5000.00', 'Entrenar duro es discriminar gordas');
 
 --
 -- Índices para tablas volcadas
@@ -181,64 +181,6 @@ ALTER TABLE `entrenador_especialidades`
 --
 ALTER TABLE `especialidades`
   ADD PRIMARY KEY (`id_especialidad`);
-
---
--- Indices de la tabla `planes_entrenamiento`
---
-ALTER TABLE `planes_entrenamiento`
-  ADD PRIMARY KEY (`id_plan`),
-  ADD KEY `fk_plan_entrenador` (`id_entrenador`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT de la tabla `entrenadores`
---
-ALTER TABLE `entrenadores`
-  MODIFY `id_entrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `especialidades`
---
-ALTER TABLE `especialidades`
-  MODIFY `id_especialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de la tabla `planes_entrenamiento`
---
-ALTER TABLE `planes_entrenamiento`
-  MODIFY `id_plan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `clientes`
---
-ALTER TABLE `clientes`
-  ADD CONSTRAINT `fk_plan_cliente` FOREIGN KEY (`id_plan`) REFERENCES `planes_entrenamiento` (`id_plan`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `entrenador_especialidades`
---
-ALTER TABLE `entrenador_especialidades`
-  ADD CONSTRAINT `fk_entrenador` FOREIGN KEY (`id_entrenador`) REFERENCES `entrenadores` (`id_entrenador`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_especialidad` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id_especialidad`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `planes_entrenamiento`
---
-ALTER TABLE `planes_entrenamiento`
-  ADD CONSTRAINT `fk_plan_entrenador` FOREIGN KEY (`id_entrenador`) REFERENCES `entrenadores` (`id_entrenador`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

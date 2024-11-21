@@ -29,26 +29,6 @@
             </div>
 
             <div class="mb-3">
-                <!-- <label for="id_entrenador" class="form-label">Entrenador</label> -->
-                <!-- <select class="form-select" id="id_entrenador" name="id_entrenador" required> -->
-                    <!-- <option value="" selected disabled>Seleccione un entrenador</option> -->
-                    
-                    
-                    <!-- Espacio para listar entrenadores mergeando -->   
-                    <!-- Implementar cuando este asociado a entrenadores -->                  
-                    <?php
-                    // Obtener entrenadores desde el controlador
-                    //$entrenadores = ControladorEntrenadores::ctrMostrarEntrenadores(null, null);
-                    //foreach ($entrenadores as $entrenador) {
-                    //    echo '<option value="' . $entrenador["id_entrenador"] . '">' . $entrenador["nombre_entrenador"] . '</option>';
-                    //}
-                    ?>
-
-
-                </select>
-            </div>
-
-            <div class="mb-3">
                 <label for="precio" class="form-label">Precio ($)</label>
                 <input type="number" class="form-control" id="precio" name="precio" step="0.01" min="0" required>
             </div>

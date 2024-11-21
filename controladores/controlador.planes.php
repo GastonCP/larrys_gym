@@ -2,10 +2,21 @@
 
 class ControladorPlanes
 {
+    ////////////////////////////////////////////////////////////////////////////////
+
     // Mostrar planes de entrenamiento
     static public function ctrMostrarPlanes($item, $valor)
     {
         $respuesta = ModeloPlanes::mdlMostrarPlanes($item, $valor);
+        return $respuesta;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Controlador Mostrar un plan de entrenamiento
+    static public function ctrMostrarPlan($item, $valor)
+    {
+        $respuesta = ModeloPlanes::mdlMostrarPlan($item, $valor);
         return $respuesta;
     }
 
@@ -18,16 +29,17 @@ class ControladorPlanes
             $tabla = "planes_entrenamiento";
 
             $datos = array(
-                "nombre" => $_POST["nombre_plan"],
+                "nombre_plan" => $_POST["nombre_plan"], 
                 "duracion" => $_POST["duracion"],
-                //"descripcion" => $_POST["descripcion"],
-                "precio" => $_POST["precio"]
+                "sesiones" => $_POST["sesiones"],
+                "precio" => $_POST["precio"],
+                "descripcion" => $_POST["descripcion"]
             );
-
-            //$url = ControladorPlantilla::url() . "planes";
+            
             $respuesta = ModeloPlanes::mdlAgregarPlan($tabla, $datos);
 
             if ($respuesta == "ok") {
+                $url = ControladorPlantilla::url() . "planes";
                 echo '<script>
                     fncSweetAlert(
                         "success",
@@ -49,27 +61,27 @@ class ControladorPlanes
 
             $datos = array(
                 "id_plan" => $_POST["id_plan"],
-                "nombre" => $_POST["nombre_plan"],
+                "nombre_plan" => $_POST["nombre_plan"],
                 "duracion" => $_POST["duracion"],
-                "descripcion" => $_POST["descripcion"],
-                "precio" => $_POST["precio"]
+                "sesiones" => $_POST["sesiones"],
+                "precio" => $_POST["precio"],
+                "descripcion" => $_POST["descripcion"]
             );
 
-            $url = ControladorPlantilla::url() . "planes";
             $respuesta = ModeloPlanes::mdlEditarPlan($tabla, $datos);
 
             if ($respuesta == "ok") {
+                $url = ControladorPlantilla::url() . "planes";
                 echo '<script>
                     fncSweetAlert(
                         "success",
-                        "El plan de entrenamiento se actualizó correctamente",
+                        "El plan de entrenamiento se edito correctamente",
                         "' . $url . '"
                     );
                 </script>';
             }
         }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////
 

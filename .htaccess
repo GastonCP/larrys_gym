@@ -2,3 +2,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.+)$ index.php?pagina=$1 [QSA,L]
+RewriteRule ^planes_editar/([0-9]+)$ planes_editar.php?id=$1 [L]
