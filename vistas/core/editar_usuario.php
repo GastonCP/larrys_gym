@@ -1,72 +1,72 @@
 <?php
-session_start();
-require 'db_connection.php';
+$item = "id_usuario";
+$valor = $_GET["id_usuario"];
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit;// Redirige a la página de inicio de sesión si no es admin
-}
-
-$id = $_GET['id'];
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = trim($_POST['nombre']);
-    $usuario = trim($_POST['usuario']);
-    $email = trim($_POST['email']);
-    $rol = trim($_POST['rol']);
-
-    if (!empty($nombre) && !empty($usuario) && !empty($email) && !empty($rol)) {
-        $sql = "UPDATE usuarios SET nombre = ?, usuario = ?, email = ?, rol = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssi", $nombre, $usuario, $email, $rol, $id);
-
-        if ($stmt->execute()) {
-            header("Location: usuarios.php");
-            exit;
-        } else {
-            $error = "Error: " . $stmt->error;
-        }
-    } else {
-        $error = "Por favor, complete todos los campos.";
-    }
-} else {
-    $sql = "SELECT nombre, usuario, email, rol FROM usuarios WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-}
+$usuario = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuario</title>
-</head>
-<body>
-    <h1>Editar Usuario</h1>
-    <?php if (!empty($error)): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
-    <form action="editar_usuario.php?id=<?php echo $id; ?>" method="POST">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="<?php echo $user['nombre']; ?>" required>
-        <br>
-        <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" name="usuario" value="<?php echo $user['usuario']; ?>" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required>
-        <br>
-        <label for="rol">Rol:</label>
-        <select id="rol" name="rol" required>
-            <option value="admin" <?php echo $user['rol'] == 'admin' ? 'selected' : ''; ?>>Administrador</option>
-            <option value="usuario" <?php echo $user['rol'] == 'usuario' ? 'selected' : ''; ?>>Usuario</option>
-        </select>
-        <br>
-        <button type="submit">Guardar Cambios</button>
-    </form>
-</body>
-</html>
+<div class="col-lg-12 mt-4">
+    <div class="card">
+
+        <div class="card-header">
+            <h5 class="card-title mb-0">Editar Usuario</h5>
+        </div>
+
+        <div class="card-body">
+            <form method="POST">
+
+                <!-- Campo Nombre -->
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre"
+                        value="<?php echo $usuario['nombre_usuario']; ?>" required>
+                </div>
+
+                <!-- Campo Apellido -->
+                <div class="mb-3">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Apellido"
+                        value="<?php echo $usuario['apellido_usuario']; ?>" required>
+                </div>
+
+                <!-- Campo Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Correo Electrónico"
+                        value="<?php echo $usuario['email_usuario']; ?>" required>
+                </div>
+
+                <!-- Campo Contraseña -->
+                <div class="mb-3">
+                    <label for="contrasena" class="form-label">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" class="form-control"
+                        placeholder="Contraseña" value="" required>
+                    <small>Deje en blanco si no desea cambiar la contraseña.</small>
+                </div>
+
+                <!-- Campo Rol -->
+                <div class="mb-3">
+                    <label for="rol" class="form-label">Rol</label>
+                    <select name="rol" class="form-select" required>
+                        <option value="admin" <?php echo $usuario['rol_usuario'] == 'admin' ? 'selected' : ''; ?>>Administrador</option>
+                        <option value="usuario" <?php echo $usuario['rol_usuario'] == 'usuario' ? 'selected' : ''; ?>>Usuario</option>
+                    </select>
+                </div>
+
+                <!-- Campo ID de usuario (oculto para evitar cambios accidentales) -->
+                <input type="hidden" name="id_usuario" value="<?php echo $usuario['id_usuario']; ?>">
+
+                <?php
+                // Se llama al controlador para realizar la edición del usuario
+                $editar = new ControladorUsuarios();
+                $editar->ctrEditarUsuarios();
+                ?>
+
+                <!-- Botón para guardar los cambios -->
+                <button class="btn btn-info" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar Cambios</button>
+
+            </form>
+        </div>
+
+    </div>
+</div>
