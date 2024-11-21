@@ -1,64 +1,101 @@
-<?php
-session_start();
-require 'db_connection.php';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-    // Verifica que ambos campos no estén vacíos
-    if (!empty($username) && !empty($password)) {
-        $sql = "SELECT id, usuario, contraseña, rol FROM usuarios WHERE usuario = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows === 1) {// Verifica si se encontró un usuario con el nombre proporcionado
-            $user = $result->fetch_assoc();
-            if (password_verify($password, $user['contraseña'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['usuario'];
-                $_SESSION['role'] = $user['rol'];
-
-                // Redirigir según el rol del usuario
-                if ($user['rol'] === 'admin') {
-                    header("Location: admin_dashboard.php"); //te manda a la entrada para administradores
-                } else {
-                    header("Location: dashboard.php"); //te lleva a la entrada para usuarios
-                }
-                exit;
-            } else {
-                $error = "Credenciales incorrectas.";
-            }
-        } else {
-            $error = "Credenciales incorrectas.";
-        }
-    } else {
-        $error = "Por favor, complete todos los campos.";
-    }
-}
-?>
-
-<!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .card h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-label {
+            font-size: 14px;
+            color: #555;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .alert {
+            color: red;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Iniciar Sesión</h2>
-    <?php if (!empty($error)) : ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
-    <form action="login.php" method="POST">
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Ingresar</button>
-    </form>
+
+    <div class="container">
+        <div class="card">
+            <div class="text-center">
+                <h3>Inicio del Sistema</h3>
+                <p>Ingrese sus datos</p>
+            </div>
+
+            <!-- Formulario de inicio de sesión -->
+            <form method="POST">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="Ingrese su email">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="Ingrese su contraseña">
+                </div>
+                <?php
+                    // Llamada al controlador de ingreso de usuarios
+                    $ingreso = new ControladorUsuarios();
+                    $ingreso->ctrIngresoUsuarios();
+                ?>
+                <div>
+                    <button class="btn-primary" type="submit">Ingresar</button>
+                </div>
+            </form>
+
+            <!-- Mensaje de error (si existe) -->
+            <?php if (!empty($error)): ?>
+                <div class="alert">
+                    <?php echo $error; ?>
+                </div>
+            <?php endif; ?>
+
+        </div>
+    </div>
+
 </body>
 </html>

@@ -5,7 +5,7 @@ require_once 'controladores/controlador.plantilla.php';
 
 # Usuarios
 #require_once 'modelos/modelo.usuarios.php';
-#require_once 'controladores/usuarios.controlador.php';
+#require_once 'controladores/controlador.usuarios.php';
 
 # Clientes
 require_once "modelos/modelo.clientes.php";

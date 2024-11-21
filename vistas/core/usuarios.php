@@ -1,50 +1,60 @@
+<h1>Gestión de Usuarios</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-header">
+                <a href="agregar_usuario.php" class="btn btn-info">Agregar usuario</a>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <table id="datatable" class="table table-bordered table-striped dt-responsive table-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Obtener la lista de usuarios desde el controlador
+                        $usuarios = ControladorUsuarios::ctrMostrarUsuarios(null, null);
+                        foreach ($usuarios as $key => $usuario) {
+                            ?>
+                            <tr style="background-color:#000888">
+                                <td><?php echo $usuario["nombre_usuario"]; ?></td>
+                                <td><?php echo $usuario["apellido_usuario"]; ?></td>
+                                <td><?php echo $usuario["cuenta_usuario"]; ?></td>
+                                <td><?php echo $usuario["email_usuario"]; ?></td>
+                                <td><?php echo $usuario["rol_usuario"]; ?></td>
+                                <td>
+                                    <!-- Enlace para editar el usuario -->
+                                    <a href="editar_usuario.php?id_usuario=<?php echo $usuario["id_usuario"]; ?>" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a> 
+                                    <!-- Botón para eliminar el usuario -->
+                                    <button class="btn btn-danger btnEliminarUsuario" id_usuario="<?php echo $usuario["id_usuario"]; ?>" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div><!-- end card-body -->
+
+        </div><!-- end card -->
+    </div><!-- end col-12 -->
+</div><!-- end row -->
+
 <?php
-session_start();// Inicia o reanuda la sesión del usuario actual
-require 'db_connection.php';
-
-// Verificar si el usuario tiene rol de administrador
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit;
-}
-
-// Obtener la lista de usuarios
-$sql = "SELECT id, nombre, usuario, email, rol FROM usuarios";
-$result = $conn->query($sql);
+// Llamada al controlador para manejar la eliminación de usuarios
+$eliminar = new ControladorUsuarios();
+$eliminar->ctrEliminarUsuarios();
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Usuarios</title>
-</head>
-<body>
-    <h1>Gestión de Usuarios</h1>
-    <a href="crear_usuario.php">Crear Nuevo Usuario</a>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Usuario</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-        </tr>
-        <?php while ($row = $result->fetch_assoc()): ?>
-        <tr>
-            <td><?php echo $row['id']; ?></td>
-            <td><?php echo $row['nombre']; ?></td>
-            <td><?php echo $row['usuario']; ?></td>
-            <td><?php echo $row['email']; ?></td>
-            <td><?php echo $row['rol']; ?></td>
-            <td>
-                <a href="editar_usuario.php?id=<?php echo $row['id']; ?>">Editar</a> |
-                <a href="eliminar_usuario.php?id=<?php echo $row['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
-            </td>
-        </tr>
-        <?php endwhile; ?>
-    </table>
-</body>
-</html>
