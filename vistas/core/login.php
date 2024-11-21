@@ -63,7 +63,6 @@
     <div class="container">
         <div class="card">
             <div class="text-center">
-                <h3>Inicio del Sistema</h3>
                 <p>Ingrese sus datos</p>
             </div>
 
@@ -86,13 +85,6 @@
                     <button class="btn-primary" type="submit">Ingresar</button>
                 </div>
             </form>
-
-            <!-- Mensaje de error (si existe) -->
-            <?php if (!empty($error)): ?>
-                <div class="alert">
-                    <?php echo $error; ?>
-                </div>
-            <?php endif; ?>
 
         </div>
     </div>

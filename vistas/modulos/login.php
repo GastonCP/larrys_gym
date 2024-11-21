@@ -47,7 +47,7 @@
                                                 <?php 
 
                                                 $ingreso = new ControladorUsuarios();
-                                                $ingreso -> ctrIngresoUsuario();
+                                                $ingreso -> ctrIngresoUsuarios();
 
                                                 ?>
 
