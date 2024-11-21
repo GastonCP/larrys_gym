@@ -39,17 +39,16 @@ $cantidad = count($pagos);
                                 <td><?php echo $pago["metodo_pago"]; ?></td>
                                 <td><?php echo $pago["estado"]; ?></td>
                                 <td><?php echo $pago["descripcion"]; ?></td>
-                                <!-- <td>
-                                    <span class="badge badge-<?#php echo $pago["estado"] === 'COMPLETADO' ? 'success' : 'warning'; ?>">
-                                        <?php# echo $pago["estado"]; ?>
-                                    </span>
-                                </td>
-                                <td><?php# echo $pago["descripcion"]; ?></td> -->
+                                
                                 <td>
-                                    <!-- Botón Editar Pago -->
-                                    <a href="pagos_editar/<?php echo $pago['id_pago']; ?>" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
+                                    <!-- Botón Confirmar Pago -->
+                                    <button
+                                        class="btn btn-success btnConfirmarPago"
+                                        id_pago="<?php echo $pago["id_pago"]; ?>"
+                                        estado_actual="<?php echo $pago["estado"]; ?>"
+                                    >
+                                        <i class="fas fa-check"></i> Confirmar
+                                    </button>
 
                                     <!-- Botón Eliminar Pago -->
                                     <button
@@ -58,6 +57,8 @@ $cantidad = count($pagos);
                                     >
                                         <i class="fas fa-trash"></i> Eliminar
                                     </button>
+                                </td>
+
                                 </td>
                             </tr>
                         <?php } ?>
